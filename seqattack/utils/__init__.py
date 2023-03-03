@@ -36,13 +36,14 @@ def predictions_per_character(out_tokens, predictions):
     return single_char_text, single_char_predictions, single_char_raw_output
 
 
-def postprocess_ner_output(original_text, predictions, out_tokens):
+def postprocess_ner_output(original_text: str, predictions, out_tokens, *, lower_case: bool = False):
     """
         Postprocesses NER models output, fixing the issue of a model
         predicting labels for sub-tokens.
 
         # TODO: We should write automated tests for this
     """
+
     original_tokens = original_text.split(" ")
 
     # Remove ## (BERT) BPE artifacts
@@ -69,6 +70,10 @@ def postprocess_ner_output(original_text, predictions, out_tokens):
     # token (or list of subtokens) in the output predictions
     for token in original_tokens:
         token_start_index = prediction_idx
+
+        if lower_case:
+            token = token.lower()
+            token = token.replace('й', 'и').replace('ё', 'е')
 
         while current_out_token != token:
             current_out_token = f"{current_out_token}{single_char_text[prediction_idx]}"

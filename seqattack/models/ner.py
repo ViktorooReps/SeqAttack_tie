@@ -1,3 +1,5 @@
+from functools import partial
+
 import torch
 import numpy as np
 
@@ -90,5 +92,5 @@ class NERModelWrapper(ModelWrapper):
         return tokenizer, NERModelWrapper(
             model,
             tokenizer,
-            postprocess_func=postprocess_ner_output,
+            postprocess_func=partial(postprocess_ner_output, lower_case=tokenizer.do_lower_case),
             name=model_name)

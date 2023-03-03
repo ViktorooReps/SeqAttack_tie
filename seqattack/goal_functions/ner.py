@@ -103,7 +103,9 @@ class NERGoalFunction(GoalFunction):
         _, preds, confidence_scores, all_labels_confidences = self.ner_postprocess_func(
             attacked_text.text,
             model_output,
-            tokenized_input)
+            tokenized_input,
+            lower_case=self.tokenizer.do_lower_case
+        )
 
         return preds, confidence_scores, named_entity_mask, all_labels_confidences
 
