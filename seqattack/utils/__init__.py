@@ -71,7 +71,7 @@ def postprocess_ner_output(original_text: str, predictions, out_tokens, *, lower
     for token in original_tokens:
         token_start_index = prediction_idx
 
-        if lower_case:
+        if lower_case and token != '[UNK]' and token != '[CLS]' and token != '[SEP]':
             token = token.lower()
             token = token.replace('й', 'и').replace('ё', 'е')
 
