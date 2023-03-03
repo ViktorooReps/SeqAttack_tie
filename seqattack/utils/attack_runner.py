@@ -126,4 +126,4 @@ class AttackRunner():
                     "recipe_args": recipe_metadata
                 },
                 "attacked_examples": attack_results
-            }))
+            }, ensure_ascii=False))
